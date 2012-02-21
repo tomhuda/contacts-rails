@@ -1,0 +1,46 @@
+{
+    "predef": [
+        "console",
+        "Ember",
+        "DS",
+        "ember_assert",
+        "require",
+
+        "equal",
+        "test",
+        "testBoth",
+        "raises",
+        "deepEqual",
+        "start",
+        "stop",
+        "ok",
+        "strictEqual",
+        "module"
+    ],
+
+    "node" : false,
+    "es5" : true,
+    "browser" : true,
+
+    "boss" : false,
+    "curly": false,
+    "debug": false,
+    "devel": false,
+    "eqeqeq": true,
+    "evil": true,
+    "forin": false,
+    "immed": false,
+    "laxbreak": false,
+    "newcap": true,
+    "noarg": true,
+    "noempty": false,
+    "nonew": false,
+    "nomen": false,
+    "onevar": false,
+    "plusplus": false,
+    "regexp": false,
+    "undef": true,
+    "sub": true,
+    "strict": false,
+    "white": false
+}
