@@ -1,5 +1,8 @@
 {
     "predef": [
+        "App",
+        "$",
+
         "console",
         "Ember",
         "DS",

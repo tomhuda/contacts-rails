@@ -1,0 +1,9 @@
+{{#if isEditing}}
+  {{view App.TextField valueBinding="value" propagatesEvents=true}}
+{{else}}
+  {{#if value}}
+    {{value}}
+  {{else}}
+    <span class="no-name">empty</span>
+  {{/if}}
+{{/if}}

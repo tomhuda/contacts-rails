@@ -1,0 +1,12 @@
+{{#with content}}
+  <li>
+  {{#if hasName}}
+    {{#if lastName}}
+      {{firstName}} <b>{{lastName}}</b>
+    {{else}}
+      <b>{{firstName}}</b>
+    {{/if}}
+  {{else}}
+    <span class="no-name">no name</span>
+  {{/if}}
+{{/with}}
