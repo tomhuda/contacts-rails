@@ -4,4 +4,6 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+task "assets:precompile" => :environment
+
 ContactsRails::Application.load_tasks

@@ -2,13 +2,33 @@ require "rake-pipeline-web-filters"
 
 output "public"
 
-input "app/assets/app" do
+# Use the Rails asset directories. This allows engines to provide
+# assets to Rake::Pipeline.
+#
+# The structure of asset directories should be:
+#
+# |~assets
+# | |~app (files that will be compiled)
+# | |~static (files to copy directly with no compilation)
+# | |~spec (test files that will be available only in development mode)
+assets = Rails.application.config.assets
+paths = assets.paths
+
+app = paths.select { |path| path =~ /\/app$/ }
+static = paths.select { |path| path =~ /\/static$/ }
+spec = paths.select { |path| path =~ /\/spec$/ }
+
+# Files in assets/app will be compiled using the filters below
+inputs app do
+  # handlebars
   match "*.handlebars" do
     handlebars do |input|
       input.sub(/\.handlebars$/, ".handlebars.js")
     end
   end
 
+  # wrap javascript in module wrappers and concatenate (this includes the
+  # compiled handlebars files above)
   match "*.js" do
     minispade :rewrite_requires => true, :string => true,
               :module_id_generator => proc { |input| input.path[/^(.*)\.js$/, 1] }
@@ -16,18 +36,25 @@ input "app/assets/app" do
     concat "application.js"
   end
 
+  # sass
   match "*.scss" do
-    sass
+    sass :cache_location => File.join(Rails.root, "tmp/sass/cache"),
+         :additional_load_paths => app.map { |path| File.join(path, "stylesheets") }
+
     concat "application.css"
   end
 end
 
-input "app/assets/static" do
+# Copy all files in assets/static directly without compilation
+inputs static do
   copy
 end
 
+# Only make spec files available in development
 if Rails.env.development?
-  input "app/assets/spec" do
+  inputs spec do
+    # concatenate JS files using minispade so we can load them using a single script tag
+    # for convenience.
     match "*.js" do
       minispade :rewrite_requires => true, :string => true,
                 :module_id_generator => proc { |input| input.path[/^(.*)\.js$/, 1] }
@@ -35,8 +62,9 @@ if Rails.env.development?
       concat "specs.js"
     end
 
+    # namespace all other files under /spec to avoid conflicts
     match "*.{html,css}" do
-      copy
+      copy { |input| "spec/#{input}" }
     end
   end
 end
