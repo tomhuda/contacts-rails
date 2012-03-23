@@ -68,6 +68,18 @@ body {
   cursor: default;
 }
 
+#contact-list .is-dirty {
+  background-color: #E3CD9D;
+}
+
+#contact-list .is-saving {
+  background-color: green;
+}
+
+#contact-list .is-deleted {
+  text-decoration: strike-through;
+}
+
 #contact-list .is-selected {
   background-color: #ecf3ff;
   color: #274bf1;

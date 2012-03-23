@@ -2,8 +2,13 @@
 
 require('vendor/jquery-1.7.1');
 require('vendor/ember');
+require('vendor/ember-data');
 
-App = Ember.Application.create();
+App = Ember.Application.create({
+  store: DS.Store.create({
+    adapter: DS.RESTAdapter.create()
+  })
+});
 
 var modules = minispade.modules;
 for (var module in modules) {

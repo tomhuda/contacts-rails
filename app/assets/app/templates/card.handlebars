@@ -1,0 +1,22 @@
+<div class="card">
+  {{#with App.selectedContactController.content}}
+    <div class="name">
+      {{editable "firstName"}} {{editable "lastName"}}
+    </div>
+
+    {{#button target="App.selectedContactController"
+    action="deleteContact"}}Delete Contact{{/button}}
+
+    <table class="phone-numbers">
+      {{#each phoneNumbers}}
+        <tr>
+          <td>{{editable number}}</td>
+          <td>{{view App.DeleteNumberView contentBinding="this"}}</td>
+        </tr>
+      {{/each}}
+    </table>
+    {{#view Ember.Button target="App.selectedContactController" action="addPhoneNumber"}}
+      Add Phone Number
+    {{/view}}
+  {{/with}}
+</div>

@@ -1,5 +1,5 @@
 App.ContactListItemView = Ember.View.extend({
-  classNameBindings: ['isSelected'],
+  classNameBindings: ['isSelected', 'content.isDirty', 'content.isSaving', 'content.isDeleted'],
   templateName: 'contact_list_item',
 
   click: function() {

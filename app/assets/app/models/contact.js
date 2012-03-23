@@ -1,6 +1,8 @@
-App.Contact = Ember.Object.extend({
-  firstName: '',
-  lastName: '',
+App.Contact = DS.Model.extend({
+  firstName: DS.attr('string',  { key: 'first_name' }),
+  lastName: DS.attr('string', { key: 'last_name' }),
+
+  phoneNumbers: DS.hasMany('App.PhoneNumber'),
 
   hasName: function() {
     var firstName = this.get('firstName'),

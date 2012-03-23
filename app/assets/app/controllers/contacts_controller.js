@@ -69,46 +69,26 @@ App.contactsController = Ember.ArrayController.create({
         lastName = Math.floor(Math.random()*names.length),
         hasLastName = Math.random();
 
-    this.add(App.Contact.create({
+    App.Contact.createRecord({
       firstName: names[firstName],
       lastName: hasLastName < 0.9 ? names[lastName] : null,
       phoneNumbers: []
-    }));
+    });
   },
 
   loadContacts: function() {
-    var self = this;
-    $.ajax({
-      url: '/contacts.json',
-      dataType: 'json',
-      success: function(data) {
-        var contacts = data.contacts;
-
-        // Turn JSON objects into bindable Ember
-        // objects.
-        contacts = contacts.map(function(item) {
-          return self.createContactFromJSON(item);
-        });
-
-        self.add(contacts);
-      },
-
-      error: function() {
-        self.pushObject(self.createContactFromJSON({
-          firstName: 'Peter',
-          lastName: 'Wagenet',
-          phoneNumbers: ['(415) 555-2381']
-        }));
-
-        self.set('isFromFixtures', true);
-      }
-    });
+    var content = App.Contact.find();
+    this.set('content', content);
   },
 
   createContactFromJSON: function(json) {
-    json.phoneNumbers = json.phone_numbers.map(function(number) {
-      return { number: number };
-    });
+    json.phoneNumbers = json.phone_numbers;
+    json.firstName = json.first_name;
+    json.lastName = json.last_name;
+
+    delete json.first_name;
+    delete json.last_name;
+    delete json.phone_numbers;
 
     return App.Contact.create(json);
   }

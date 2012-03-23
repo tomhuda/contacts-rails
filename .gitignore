@@ -19,3 +19,5 @@ config/database.yml
 
 # Ignore public. Put static files in app/assets/statc
 /public
+
+.sass-cache/

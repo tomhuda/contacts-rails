@@ -1,3 +1,3 @@
-class PhoneNumberSerializer
+class PhoneNumberSerializer < ApplicationSerializer
   attributes :id, :number
 end

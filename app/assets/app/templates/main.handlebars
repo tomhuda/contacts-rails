@@ -11,23 +11,7 @@
 
   <div id="detail">
     {{#if App.selectedContactController.content}}
-      {{#view App.CardView}}
-        <div class="name">
-          {{editable "content.firstName"}} {{editable "content.lastName"}}
-        </div>
-
-        <table class="phone-numbers">
-          {{#each content.phoneNumbers}}
-            <tr>
-              <td>{{editable number}}</td>
-              <td>{{view App.DeleteNumberView contentBinding="this"}}</td>
-            </tr>
-          {{/each}}
-        </table>
-        {{#view Ember.Button target="contentView" action="addPhoneNumber"}}
-          Add Phone Number
-        {{/view}}
-      {{/view}}
+      {{template "card"}}
     {{else}}
       <div class="no-contact-selected">No contact selected.</div>
     {{/if}}
